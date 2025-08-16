@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { hp, wp } from '@/helper/responsiveSize';
 import axios from 'axios';
@@ -8,9 +8,9 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const API_BASE_URL = 'https://era-jewels-backend.vercel.app'; // Replace with your server IP
+  const [deletingId, setDeletingId] = useState(null);
+  const API_BASE_URL = 'https://era-jewels-backend.vercel.app';
 
-  // Fetch products from API
   const fetchProducts = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
@@ -20,34 +20,52 @@ const ProductList = () => {
       setProducts(response.data.products);
     } catch (error) {
       console.error('Fetch products error:', error);
-      Alert.alert('Error', 'Failed to fetch products');
+      Alert.alert('Error', error.response?.data?.message || 'Failed to fetch products');
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
   };
 
-  // Delete product
   const handleDelete = async (id) => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      await axios.delete(`${API_BASE_URL}/api/product/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      fetchProducts(); // Refresh the list
-      Alert.alert('Success', 'Product deleted successfully');
-    } catch (error) {
-      console.error('Delete error:', error);
-      Alert.alert('Error', 'Failed to delete product');
-    }
+    Alert.alert(
+      'Delete Product',
+      'Are you sure you want to delete this product?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              setDeletingId(id);
+              const token = await AsyncStorage.getItem('token');
+              await axios.post(
+                `${API_BASE_URL}/api/product/remove`,
+                { id },
+                { headers: { Authorization: `Bearer ${token}` } }
+              );
+              fetchProducts();
+              Alert.alert('Success', 'Product deleted successfully');
+            } catch (error) {
+              console.error('Delete error:', error);
+              Alert.alert('Error', error.response?.data?.message || 'Failed to delete product');
+            } finally {
+              setDeletingId(null);
+            }
+          },
+        },
+      ]
+    );
   };
 
-  // Initial load
   useEffect(() => {
     fetchProducts();
   }, []);
 
-  // Render each product item
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <Image 
@@ -70,26 +88,36 @@ const ProductList = () => {
       <TouchableOpacity 
         style={styles.btn}
         onPress={() => handleDelete(item._id)}
+        disabled={deletingId === item._id}
       >
-        <Text style={styles.btnText}>Delete</Text>
+        {deletingId === item._id ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <Text style={styles.btnText}>Delete</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
 
-  // Loading state
-  if (loading) {
+  if (loading && !refreshing) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={styles.centerContainer}>
+        <ActivityIndicator size="large" color="#1976d2" />
         <Text>Loading products...</Text>
       </View>
     );
   }
 
-  // Empty state
   if (products.length === 0) {
     return (
-      <View style={styles.emptyContainer}>
+      <View style={styles.centerContainer}>
         <Text style={styles.emptyText}>No products found</Text>
+        <TouchableOpacity 
+          style={styles.refreshButton}
+          onPress={fetchProducts}
+        >
+          <Text style={styles.refreshText}>Refresh</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -120,19 +148,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
     backgroundColor: '#f8f9fa',
   },
-  loadingContainer: {
+  centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 20
   },
   emptyText: {
     fontSize: wp(4.5),
     color: '#6c757d',
+    marginBottom: hp(2)
+  },
+  refreshButton: {
+    backgroundColor: '#1976d2',
+    paddingHorizontal: wp(5),
+    paddingVertical: hp(1.5),
+    borderRadius: wp(2)
+  },
+  refreshText: {
+    color: '#fff',
+    fontSize: wp(4)
   },
   heading: {
     fontSize: wp(5.5),

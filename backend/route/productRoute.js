@@ -1,7 +1,6 @@
 import express from "express";
 import { upload } from "../middleware/multer.js"; // use your shared multer config
-import {
-  addProduct,
+import {addProduct,
   listProduct,
   removeProduct,
   singleProduct,
@@ -15,4 +14,4 @@ productRouter.get("/list", listProduct);
 productRouter.post("/remove", removeProduct);
 productRouter.post("/single", singleProduct);
 
-export default productRouter;
+export default productRouter

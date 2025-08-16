@@ -11,24 +11,24 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
 const OrderDetail = () => {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const { orderId } = route.params;
+  const router = useRouter();
+  const { id: orderId, status: initialStatus } = useLocalSearchParams();
   const API_BASE_URL = 'https://era-jewels-backend.vercel.app';
 
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentStatus, setCurrentStatus] = useState(initialStatus || '');
 
   const fetchOrderDetails = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
       if (!token) {
-        navigation.navigate('Login');
+        router.push('/Login');
         return;
       }
 
@@ -42,6 +42,7 @@ const OrderDetail = () => {
       );
 
       setOrder(response.data.order);
+      setCurrentStatus(response.data.order.status);
       setError(null);
     } catch (err) {
       console.error('Fetch error:', err);
@@ -52,16 +53,34 @@ const OrderDetail = () => {
   };
 
   useEffect(() => {
-    fetchOrderDetails();
+    if (orderId) {
+      fetchOrderDetails();
+    }
   }, [orderId]);
 
+  useEffect(() => {
+    if (initialStatus && initialStatus !== currentStatus) {
+      setCurrentStatus(initialStatus);
+      fetchOrderDetails();
+    }
+  }, [initialStatus]);
+
   const handleBack = () => {
-    navigation.goBack();
+    router.back();
   };
 
   const formatDate = (dateString) => {
     const options = { day: 'numeric', month: 'short', year: 'numeric' };
     return new Date(dateString).toLocaleDateString('en-IN', options);
+  };
+
+  const getImageSource = (item) => {
+    if (Array.isArray(item.image) && item.image.length > 0) {
+      return { uri: item.image[0] };
+    } else if (typeof item.image === 'string' && item.image.trim() !== '') {
+      return { uri: item.image };
+    }
+    return { uri: `https://via.placeholder.com/150?text=${encodeURIComponent(item.name || 'product')}` };
   };
 
   if (loading) {
@@ -97,7 +116,6 @@ const OrderDetail = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBack} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color="#333" />
@@ -106,7 +124,6 @@ const OrderDetail = () => {
         <View style={{ width: 24 }} />
       </View>
 
-      {/* Order Summary */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Order Summary</Text>
         <View style={styles.summaryRow}>
@@ -119,8 +136,8 @@ const OrderDetail = () => {
         </View>
         <View style={styles.summaryRow}>
           <Text style={styles.summaryLabel}>Status:</Text>
-          <Text style={[styles.summaryValue, styles[`status${order.status.replace(/\s+/g, '')}`]]}>
-            {order.status}
+          <Text style={[styles.summaryValue, styles[`status${currentStatus.replace(/\s+/g, '')}`]]}>
+            {currentStatus}
           </Text>
         </View>
         <View style={styles.summaryRow}>
@@ -133,7 +150,6 @@ const OrderDetail = () => {
         </View>
       </View>
 
-      {/* Shipping Address */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Shipping Address</Text>
         <Text style={styles.addressText}>{order.address?.name}</Text>
@@ -144,13 +160,12 @@ const OrderDetail = () => {
         <Text style={styles.addressText}>Phone: {order.address?.phone}</Text>
       </View>
 
-      {/* Order Items */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Items ({order.items.length})</Text>
         {order.items.map((item, index) => (
           <View key={index} style={styles.itemContainer}>
             <Image
-              source={{ uri: item.image || 'https://via.placeholder.com/150' }}
+              source={getImageSource(item)}
               style={styles.itemImage}
               resizeMode="cover"
             />
