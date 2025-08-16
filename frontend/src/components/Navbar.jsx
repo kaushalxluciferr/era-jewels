@@ -83,7 +83,7 @@ Collection
     <NavLink onClick={()=>setdisplay(false)}  className='by-3 pl-8 border' to='/about'>
 About Us
     </NavLink>
-    <NavLink onClick={()=>setdisplay(false)}  className='by-3 pl-8 border' to='/ contact'>
+    <NavLink onClick={()=>setdisplay(false)}  className='by-3 pl-8 border' to='/contact'>
 Contact
     </NavLink>
 </div>

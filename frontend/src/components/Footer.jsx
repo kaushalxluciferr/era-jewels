@@ -1,38 +1,52 @@
-import React from 'react'
-import { assets } from '../assets/assets'
+import React from 'react';
+import { assets } from '../assets/assets';
 
 function Footer() {
   return (
-    <div>
-      <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm'>
-          <div>
-            <img src={assets.logo} className='mb-5 w-32 rounded-[20px]' alt="" />
-            <p className='w-full md:w-2/3 text-gray-600'>Era Jewelers brings timeless elegance with modern charm, offering exquisite rings, necklaces, and accessories crafted to shine forever.</p>
-          </div>
-          <div>
-            <p className='text-xl font-medium mb-5'>Company</p>
-            <ul className='flex flex-col gap-1 text-gray-600'>
-                <li>Home</li>
-                <li>About Us</li>
-                <li>Deleivery</li>
-                <li>Pricacy Policy</li>
-            </ul>
-          </div>
-          <div>
-            <p className='text-xl font-meduim mb-5'>Get in contact anytime</p>
-            <ul className='flex flex-col map-1 text-gray-600'>
+    <div className="px-4 sm:px-8 lg:px-16">
+      <div className='flex flex-col sm:grid sm:grid-cols-[3fr_1fr_1fr] gap-8 sm:gap-14 my-8 sm:my-10 mt-20 sm:mt-40 text-xs sm:text-sm'>
+        {/* Logo & Description */}
+        <div className='mb-6 sm:mb-0'>
+          <img 
+            src={assets.logo} 
+            className='mb-4 w-24 sm:w-32 rounded-[20px]' 
+            alt="Era Jewelers Logo" 
+          />
+          <p className='text-gray-600 text-xs sm:text-sm'>
+            Era Jewelers brings timeless elegance with modern charm, offering exquisite rings, necklaces, and accessories crafted to shine forever.
+          </p>
+        </div>
 
-                <li>+1212345678</li>
-                <li>getdetail@email.com</li>
-                </ul>
-          </div>
+        {/* Company Links */}
+        <div className='mb-6 sm:mb-0'>
+          <p className='text-base sm:text-xl font-medium mb-3 sm:mb-5'>Company</p>
+          <ul className='flex flex-row flex-wrap gap-x-4 gap-y-2 sm:flex-col sm:gap-1 text-gray-600'>
+            <li className='whitespace-nowrap'>Home</li>
+            <li className='whitespace-nowrap'>About Us</li>
+            <li className='whitespace-nowrap'>Delivery</li>
+            <li className='whitespace-nowrap'>Privacy Policy</li>
+          </ul>
+        </div>
+
+        {/* Contact Info */}
+        <div>
+          <p className='text-base sm:text-xl font-medium mb-3 sm:mb-5'>Contact</p>
+          <ul className='flex flex-row flex-wrap gap-x-4 gap-y-2 sm:flex-col sm:gap-1 text-gray-600'>
+            <li className='whitespace-nowrap'>+1212345678</li>
+            <li className='whitespace-nowrap'>getdetail@email.com</li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <hr />
-        <p className='py-5 text-sm text-center'> copyright 2024@ forever.com-All Rights reserved under Kaushal's policy</p>
+
+      {/* Copyright */}
+      <div className='mt-6 sm:mt-0'>
+        <hr className='border-gray-200' />
+        <p className='py-4 text-xs sm:text-sm text-center text-gray-500'>
+          Copyright © 2024 EraJwels.com - All Rights Reserved
+        </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default Footer
+export default Footer;
