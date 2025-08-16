@@ -10,7 +10,7 @@ import userRouter from "./route/userRoute.js";
 import cartRouter from "./route/cartRoute.js";
 import categoryRouter from "./route/categoryRoute.js";
 import orderRouter from "./route/orderRoute.js";
-import productRouter from "./route/productROute.js";
+import productRouter from "./route/productRoute.js";
 
 // app config
 const app = express();
