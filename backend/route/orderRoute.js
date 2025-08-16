@@ -1,5 +1,5 @@
 import express from "express";
-import { placeOrderCOD, allAdminOrder, allUserOrder, updateStatus } from "../controller/orderController.js";
+import { placeOrderCOD, allAdminOrder, allUserOrder, updateStatus, getOrderDetails } from "../controller/orderController.js";
 import { userAuth } from "../middleware/userAUth.js";
 import {adminAuth} from "../middleware/adminAuth.js";
 
