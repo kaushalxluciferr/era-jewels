@@ -8,7 +8,7 @@ const orderRouter = express.Router();
 // Admin routes
 orderRouter.post("/list", adminAuth, allAdminOrder);
 orderRouter.post("/status", adminAuth, updateStatus);
-
+orderRouter.post("/details", adminAuth, getOrderDetails);
 // User routes (COD only)
 orderRouter.post("/place", userAuth, placeOrderCOD);
 orderRouter.post("/userorders", userAuth, allUserOrder);

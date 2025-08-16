@@ -11,7 +11,7 @@ const OrderList = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
-  const API_BASE_URL = 'http://10.5.232.134:4000';
+  const API_BASE_URL = 'https://era-jewels-backend.vercel.app';
 
   const fetchOrders = async () => {
     try {
@@ -92,7 +92,7 @@ const OrderList = () => {
   const renderOrderItem = ({ item }) => (
     <TouchableOpacity 
       style={styles.card}
-      onPress={() => navigation.navigate('OrderDetail', { orderId: item.id })}
+      onPress={() => navigation.navigate('/(admin)/OrderDetail', { orderId: item.id })}
     >
       <View style={styles.itemPreview}>
         {item.items.slice(0, 3).map((product, idx) => (

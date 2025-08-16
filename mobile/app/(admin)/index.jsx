@@ -18,7 +18,7 @@ const AddProduct = () => {
   const [bestseller, setBestseller] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const API_BASE_URL = 'http://10.5.232.134:4000'; // Replace with your server IP
+  const API_BASE_URL = 'https://era-jewels-backend.vercel.app'; // Replace with your server IP
 
   useEffect(() => {
     fetchCategories();

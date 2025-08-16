@@ -9,6 +9,7 @@ const AdminLayout = () => {
     <Tabs.Screen name='productList' options={{title:"All Product", tabBarIcon:({color,size})=><Ionicons name='bag-outline' size={size} color={color}/>}}/>
     <Tabs.Screen name='order' options={{title:"All order", tabBarIcon:({color,size})=><Ionicons name='receipt-outline' size={size} color={color}/>}}/>
     <Tabs.Screen name='addCategory' options={{title:"Add Category", tabBarIcon:({color,size})=><Ionicons name='add-outline' size={size} color={color}/>}}/>
+    <Tabs.Screen name='OrderDetail' options={{href:null}}/>
    </Tabs>
   )
 }

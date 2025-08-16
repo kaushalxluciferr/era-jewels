@@ -8,7 +8,7 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const API_BASE_URL = 'http://10.5.232.134:4000'; // Replace with your server IP
+  const API_BASE_URL = 'https://era-jewels-backend.vercel.app'; // Replace with your server IP
 
   // Fetch products from API
   const fetchProducts = async () => {

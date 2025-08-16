@@ -12,7 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const API_BASE_URL = 'http://10.5.232.134:4000'; // Your server IP
+  const API_BASE_URL = 'https://era-jewels-backend.vercel.app'; 
 
   const handleLogin = async () => {
     if (!email || !password) {
