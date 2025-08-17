@@ -8,15 +8,17 @@ import axios from 'axios'
 function Collection() {
   const {products, search, showsearch, backendUrl} = useContext(ShopContext)
   const [show, setshow] = useState(false)
-  const [filterprod, setfilterprod] = useState([])
+  const [filterprod, setfilterprod] = useState(products || []) // Initialize with products
   const [category, setcategory] = useState([])
   const [sortType, setsortType] = useState('relevant')
   const [availableCategories, setAvailableCategories] = useState([])
 
-  // Initialize with all products and maintain filtered state
+  // Apply filters whenever products, search, or category changes
   useEffect(() => {
     if (products && products.length > 0) {
-      applyfilter() // Apply filters (which will show all when no filters are active)
+      applyfilter()
+    } else {
+      setfilterprod([])
     }
   }, [products, search, showsearch, category])
 
@@ -64,14 +66,28 @@ function Collection() {
 
   // Sort products
   useEffect(() => {
-    const sorted = [...filterprod]
-    if (sortType === 'low-high') {
-      sorted.sort((a,b) => a.price - b.price)
-    } else if (sortType === 'high-low') {
-      sorted.sort((a,b) => b.price - a.price)
+    if (filterprod.length > 0) {
+      const sorted = [...filterprod]
+      if (sortType === 'low-high') {
+        sorted.sort((a,b) => a.price - b.price)
+      } else if (sortType === 'high-low') {
+        sorted.sort((a,b) => b.price - a.price)
+      }
+      // Only update if sorting would actually change the order
+      if (JSON.stringify(sorted) !== JSON.stringify(filterprod)) {
+        setfilterprod(sorted)
+      }
     }
-    setfilterprod(sorted)
-  }, [sortType])
+  }, [sortType, filterprod])
+
+  const clearAllFilters = () => {
+    setcategory([])
+    // If search is managed here, you would clear it too
+    // But since it comes from context, you might need a way to clear it
+  }
+
+  // Check if any filters are active
+  const hasActiveFilters = category.length > 0 || (showsearch && search)
 
   return (
     <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
@@ -120,6 +136,18 @@ function Collection() {
           </select>
         </div>
         
+        {/* Show clear filters button only when filters are active */}
+        {hasActiveFilters && (
+          <div className="mb-4">
+            <button 
+              onClick={clearAllFilters}
+              className='text-blue-500 text-sm'
+            >
+              Clear all filters
+            </button>
+          </div>
+        )}
+        
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
           {filterprod.length > 0 ? (
             filterprod.map((item) => (
@@ -134,15 +162,14 @@ function Collection() {
           ) : (
             <div className="col-span-full text-center py-10">
               <p>No products found matching your filters</p>
-              <button 
-                onClick={() => {
-                  setcategory([])
-                  setsearch('')
-                }}
-                className='mt-2 text-blue-500'
-              >
-                Clear all filters
-              </button>
+              {hasActiveFilters && (
+                <button 
+                  onClick={clearAllFilters}
+                  className='mt-2 text-blue-500'
+                >
+                  Clear all filters
+                </button>
+              )}
             </div>
           )}
         </div>

@@ -15,6 +15,12 @@ const logout=()=>{
 
 }
 
+const handleckick=()=>{
+    setshowsearch(true)
+    navigate('/collection')
+
+}
+
 const {setshowsearch,getcartcount,token,settoken,setCartitems}=useContext(ShopContext)
   return (
     <div className='flex items-center justify-between py-5 font-medium '>
@@ -45,7 +51,7 @@ const {setshowsearch,getcartcount,token,settoken,setCartitems}=useContext(ShopCo
 
     <div className='flex items-center gap-6'>
 
-        <img onClick={()=>setshowsearch(true)} src={assets.search_icon} className='w-5 cursor-pointer' />
+        <img onClick={()=>handleckick()} src={assets.search_icon} className='w-5 cursor-pointer' />
 <div className='group relative'>
   <img onClick={()=>token?null:navigate("/login")} src={assets.profile_icon} className='w-5 cursor-pointer' alt="" /> 
    {/* if login then this will display */}
