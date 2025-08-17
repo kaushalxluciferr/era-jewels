@@ -11,7 +11,7 @@ function Contact() {
         <Title txt1={"Contact"} txt2={'Us'}/>
       </div>
       <div className=' flex flex-col justify-center md:flex-row gap-[100px] mb-28'>
-        <img src={assets.contact_img} className='w-full md:max-w-[400px] rounded-md' alt="" />
+        <img src={assets.contact_img} className='w-full md:max-w-[450px] md:max-h-[400px] rounded-md' alt="" />
 <div className='flex flex-col justify-center items-start gap-8'>
   <p className='font-semibold text-xl text-gray-600'>Our Store</p>
   <p className='text-gray-500'>bhubaneshwar -patiya, Odisha india</p>
