@@ -93,8 +93,8 @@ function Collection() {
     <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t'>
       {/* Filter sidebar */}
       <div className='min-w-60'>
-        <p onClick={() => setshow(!show)} className='my-2 text-xl flex items-center cursor-pointer gap-2'>
-          Filters
+        <p onClick={() => setshow(!show)} className='my-2 text-xl bg-red-100 p-2 rounded-xl flex items-center cursor-pointer gap-2'>
+          Click Here to Filters
           <img src={assets.dropdown_icon} className={`h-3 sm:hidden ${show?'rotate-90':""}`} alt="" />
         </p>
 

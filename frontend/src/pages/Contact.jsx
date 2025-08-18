@@ -1,8 +1,6 @@
 import React from 'react'
 import Title from '../components/Title'
 import { assets } from '../assets/assets'
-import NewsLater from '../components/NewsLater'
-import OurPolicy from '../components/OurPolicy'
 
 function Contact() {
   return (
