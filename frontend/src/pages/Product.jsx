@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 import { assets } from '../assets/assets'
 import RelatedProduct from '../components/RelatedProduct'
+import { toast } from 'react-toastify'
 
 function Product() {
     const {id} = useParams()
-    const {products, addtochart} = useContext(ShopContext)
+    const {products, addtochart,token} = useContext(ShopContext)
     const [prddata, setprddata] = useState(false)
     const [image, setimage] = useState("")
-
+const navigate=useNavigate()
     useEffect(() => {
         const product = products.find(item => item._id === id)
         if(product) {
@@ -17,6 +18,15 @@ function Product() {
             setimage(product.image[0])
         }
     }, [id, products])
+
+    const handleCart=(id)=>{
+if(token){
+    addtochart(prddata._id)
+}else{
+    toast.error("login first")
+    navigate('/login')
+}
+    }
 
     return prddata ? (
         <div className='border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100'>
@@ -55,7 +65,7 @@ function Product() {
                     <p className='mt-5 text-3xl font-medium'>$ {prddata.price}</p>
                     <div className='my-8'>
                         <button 
-                            onClick={() => addtochart(prddata._id)} 
+                            onClick={() => handleCart(prddata._id)} 
                             className='bg-black text-white rounded-lg px-8 py-3 text-sm active:bg-gray-700'
                         >
                             Add to Cart

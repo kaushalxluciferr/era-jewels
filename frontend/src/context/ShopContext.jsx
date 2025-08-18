@@ -7,7 +7,7 @@ export const ShopContext = createContext()
 
 const ShopContextProvider = (props) => {
     const [token, settoken] = useState('')
-    const delivery_fee = 10;
+    const delivery_fee = 55;
     const backendUrl = import.meta.env.VITE_BACKEND_URL
     const [search, setsearch] = useState('')
     const [showsearch, setshowsearch] = useState(false)
