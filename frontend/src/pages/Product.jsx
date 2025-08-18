@@ -23,7 +23,7 @@ function Product() {
             <div className='flex gap-12 sm:gap-12 flex-col sm:flex-row'>
                 {/* Product images */}
                 <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
-                    <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[19%] w-full">
+                    {/* <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[19%] w-full">
                         {prddata.image.map((item,index) => (
                             <img 
                                 onClick={() => setimage(item)} 
@@ -33,7 +33,7 @@ function Product() {
                                 alt="" 
                             />
                         ))}
-                    </div>
+                    </div> */}
                     <div className='w-full sm:w-[80%]'>
                         <img src={image} className='w-full h-auto' alt="" />
                     </div>
@@ -53,7 +53,6 @@ function Product() {
                         <p className='ml-3'>(122)</p>
                     </div>
                     <p className='mt-5 text-3xl font-medium'>$ {prddata.price}</p>
-                    <p className='mt-5 text-gray-500 md:w-4/5'>{prddata.description}</p>
                     <div className='my-8'>
                         <button 
                             onClick={() => addtochart(prddata._id)} 
