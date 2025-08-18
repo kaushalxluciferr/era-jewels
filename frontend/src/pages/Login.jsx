@@ -55,7 +55,7 @@ toast.error(response.data.message)
   toast.error(error.message)
 }
 }
-settoken(localStorage.getItem('token'))
+// settoken(localStorage.getItem('token'))
 
 
 useEffect(()=>{
