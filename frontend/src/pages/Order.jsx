@@ -49,6 +49,16 @@ getorderdata()
           <div className='text-2xl'>
              <Title txt1={'My'} txt2={'Orders'}/>
           </div>
+
+
+         {
+          data.length===0 &&(
+            <div className='flex justify-center my-10'>
+              <h1>
+              You Have not order Any thing yet
+              </h1></div>
+          )
+         }
           <div>
             {
               data.map((item,index)=>(

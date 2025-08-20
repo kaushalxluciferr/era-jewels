@@ -25,7 +25,7 @@ function ProdItem({id, img, name, price}) {
             <p className='pt-4 pb-3 text-sm'>
                 {name}
             </p>
-            <p className='text-sm font-medium'>$ {price}</p>
+            <p className='text-sm font-medium'>₹ {price}</p>
         </Link>
     )
 }

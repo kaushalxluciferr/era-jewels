@@ -15,7 +15,7 @@ function Contact() {
   <p className='text-gray-500'>bhubaneshwar -patiya, Odisha india</p>
   <p>Contact:+91 89205 41284 <br />
   <p>...............+91 89205 41284</p>
-  Email: kaushalrauniyar1@gmail.com
+  Email: erajewels02@gmail.com
   </p>
   <p className='font-semibold text-xl text-gray-600'>Careers at Forever</p>
   <p className='text-gray-500'> Learn more about ourStore</p>

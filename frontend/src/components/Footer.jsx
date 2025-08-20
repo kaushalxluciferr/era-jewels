@@ -33,7 +33,7 @@ function Footer() {
           <p className='text-base sm:text-xl font-medium mb-3 sm:mb-5'>Contact</p>
           <ul className='flex flex-row flex-wrap gap-x-4 gap-y-2 sm:flex-col sm:gap-1 text-gray-600'>
             <li className='whitespace-nowrap'>+91 89205 41284</li>
-            <li className='whitespace-nowrap'>kaushalrauniyar1@gmail.com</li>
+            <li className='whitespace-nowrap'>erajewels02@gmail.com</li>
           </ul>
         </div>
       </div>
