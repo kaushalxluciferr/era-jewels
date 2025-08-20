@@ -38,7 +38,7 @@ function LatestCollections() {
     // Get latest products
     useEffect(() => {
         if (products && products.length > 0) {
-            setLatestpd(products.slice(0, 10))
+            setLatestpd(products)
         }
     }, [products])
 

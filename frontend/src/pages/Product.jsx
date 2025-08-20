@@ -62,7 +62,7 @@ if(token){
                         <img className='w-3.5' src={assets.star_dull_icon} alt="" />
                         <p className='ml-3'>(122)</p>
                     </div>
-                    <p className='mt-5 text-3xl font-medium'>$ {prddata.price}</p>
+                    <p className='mt-5 text-3xl font-medium'>₹ {prddata.price}</p>
                     <div className='my-8'>
                         <button 
                             onClick={() => handleCart(prddata._id)} 
